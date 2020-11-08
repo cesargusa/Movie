@@ -2,6 +2,8 @@ package com.example.Movie.API;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.lang.model.element.Element;
 import javax.websocket.server.PathParam;
@@ -106,6 +108,12 @@ public class MoviesController {
                 break;
             }
         }
+    }
+
+    @GetMapping("/movies/text")
+    public String Text(Locale locale){
+        var messages = ResourceBundle.getBundle("i18n\\messages", locale);
+        return messages.getString("peliculas");
     }
 
 }
