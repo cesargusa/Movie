@@ -12,6 +12,10 @@ public class TextController {
         return "idioma";
     }
 
+    @GetMapping("/movies/Language")
+    public String Language(){
+        return "language";
+    }
  
 }
 
