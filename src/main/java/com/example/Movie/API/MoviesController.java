@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.lang.model.element.Element;
-import javax.websocket.server.PathParam;
-
 import com.example.Movie.Model.Movie;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -101,7 +97,7 @@ public class MoviesController {
 
     //DELETE METHOD
     @DeleteMapping("movies/{id}")
-    private void DeleteMovie(@PathParam("id") String id){
+    private void DeleteMovie(@PathVariable("id") String id){
         for(Movie element : movies){
             if(element.getId().equals(id)){
                 movies.remove(element);
@@ -109,6 +105,8 @@ public class MoviesController {
             }
         }
     }
+    
+    
 
     @GetMapping("/movies/text")
     public String Text(Locale locale){
