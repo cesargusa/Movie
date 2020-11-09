@@ -16,6 +16,10 @@ public class TextController {
     public String Language(){
         return "language";
     }
+    @GetMapping("/movies/Buscador")
+    public String Buscador(){
+        return "buscador";
+    }
  
 }
 

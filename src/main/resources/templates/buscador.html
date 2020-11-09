@@ -1,0 +1,97 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<span th:text="#{cambiar}"></span>
+<select id="locales" onchange="cambiar()">
+    <option value=""></option>
+    <option value="en" th:text="#{en}"></option>
+    <option value="es" th:text="#{es}"></option>
+</select>
+<br>
+<br>
+<br>
+<div style="background-color: #fafafa; border: 1px solid #e8e8e8;margin-left: 5%;margin-right: 5%;">
+    <div style="margin-left: 35%; margin-top: 2%;">
+        <label th:text="#{titulo}"></label>
+        <input type="text" id="title" placeholder="Joker">
+        &nbsp;&nbsp;
+        <label th:text="#{ano}">:</label>
+        <input type="number" min="0" max="9999" id="year" placeholder="2019" style="width: 100px;">
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;
+
+
+        <button  th:text="#{buscar}" type="button" id="enviar" style="background-color: orange;width: 10%; height: 7%;"></button>
+    </div>
+    <div>
+        <h1 style="margin-left: 15%;" th:text="#{peliculas}"></h1>
+    </div>
+    <div id="resultado"
+        style="background-color: #43AC6A;font-family: 'Montserrat', sans-serif;font-size: 17px;font-weight: bold;margin-top: 3%; margin-left:4%;margin-right:10%;">
+
+    </div>
+    <ul></ul>
+</div>
+
+</body>
+<style>
+    body {
+        font-family: 'Montserrat', sans-serif;
+    }
+</style>
+<script>
+    document.getElementById('enviar').onclick = enviar;
+    let api = "http://localhost:9092/movies";
+    let re = false;
+
+
+    function cambiar() {
+        let en = document.getElementById('locales')[1];
+        let enValue = document.getElementById('locales')[1].value;
+        let es = document.getElementById('locales')[2];
+        let esValue = document.getElementById('locales')[2].value;
+        let dire = "http://localhost:9092/movies/Buscador?lang="
+
+        if (en.selected === true) location.href = dire + enValue;
+        if (es.selected === true) location.href = dire + esValue;
+
+    }
+
+    function enviar() {
+        let title = document.getElementById('title').value;
+        let year = document.getElementById('year').value;
+        $('#resultado').empty();
+        fetch(api)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(item => {
+                    function AddJson() {
+                        $('#resultado').append(`
+                            <ul style="padding-top:1%;padding-bottom:1%;">
+                                <li style="list-style-type:none;">
+                                    {Title: ${item.title} | Year: ${item.year} | Id: ${item.id}}
+                                </li>   
+                            </ul>
+                        
+                        `);
+                        return re = true;
+                    }
+                    if (title === '' && year === '') return false;
+                    if (item.title.includes(title) && year === '') AddJson();
+                    if (item.year === year && title === '') AddJson();
+                    if (item.title === title && item.year === year) AddJson();
+
+                });
+                if (re === false) $('#resultado').append(`<h1>NO RESULTS</h1>`);
+            })
+    }
+
+
+
+
+</script>
+
+</html>
