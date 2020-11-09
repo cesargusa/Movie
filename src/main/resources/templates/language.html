@@ -11,21 +11,17 @@
 </body>
 <script>
       
+      
       function cambiar(){
         let en = document.getElementById('locales')[1];
         let enValue = document.getElementById('locales')[1].value;
         let es = document.getElementById('locales')[2];
         let esValue = document.getElementById('locales')[2].value;
-        
         let dire = "http://localhost:9092/movies/Language?lang="
 
-        if(en.selected === true){
-            location.href = dire + enValue;
-        
-       } 
-       if(es.selected === true) {
-           location.href = dire + esValue;
-       }
+        if(en.selected === true) location.href = dire + enValue;
+        if(es.selected === true) location.href = dire + esValue;
+
       }
            
 
